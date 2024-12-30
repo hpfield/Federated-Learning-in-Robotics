@@ -9,3 +9,4 @@ baseline-reruns/Log
 project/Videos_Database_20_Robot
 Compressed50EHIL/Videos_Database_UR16E_WebCam_50_overall_database.npz
 Compressed50EHIL/Videos_Database_UR16E_WebCam_50_Phase_results.csv
+*events.out.tfevents.*
