@@ -1,4 +1,27 @@
+# %% [markdown]
+# Much of the code used to implement federated learning is taken or adapted from https://www.tensorflow.org/federated/tutorials/building_your_own_federated_learning_algorithm
 
+# %% [markdown]
+# ## Mount Drive
+
+# %%
+# from google.colab import drive
+# drive.mount('/content/drive')
+
+# %%
+# %cd /content/drive/MyDrive/Individual Models FXAI/
+
+# %% [markdown]
+# ## Env setup
+
+# %%
+# !pip install --quiet --upgrade tensorflow-federated
+
+# %% [markdown]
+# # Training H1
+
+# %% [markdown]
+# ## Imports
 
 # %%
 from __future__ import print_function
@@ -7,31 +30,33 @@ import tensorflow as tf
 import tensorflow_federated as tff
 import numpy as np
 import collections
-from tensorflow.keras.models import load_model  # Use tensorflow.keras consistently
+from tensorflow.keras.models import load_model
 
 # From EHIL
 
-from tensorflow.keras.layers import (Conv2D, MaxPooling2D, AveragePooling2D)
-from tensorflow.keras.layers import (Input, Activation, Dense, Flatten)
-from tensorflow.keras.layers import add, LayerNormalization
 
-from tensorflow.keras.regularizers import l2
-from tensorflow.keras import backend as K
-from tensorflow.keras.models import Model
+import keras
+from keras.layers.convolutional import ( Conv2D, MaxPooling2D, AveragePooling2D)
+from keras.layers import (    Input,    Activation,    Dense,    Flatten)
+from keras.layers import add
+from keras.layers import LayerNormalization
 
-from tensorflow.keras.preprocessing.image import ImageDataGenerator
-from tensorflow.keras.callbacks import ReduceLROnPlateau, CSVLogger, EarlyStopping
-from tensorflow.keras.callbacks import ModelCheckpoint, LearningRateScheduler
-from tensorflow.keras.utils import to_categorical  # Replace np_utils
-from tensorflow.keras.utils import plot_model
+from keras.regularizers import l2
+from keras import backend as K
+from keras.models import Model
+
+from keras.preprocessing.image import ImageDataGenerator
+from keras.callbacks import ReduceLROnPlateau, CSVLogger, EarlyStopping
+from keras.callbacks import ModelCheckpoint, LearningRateScheduler
+from keras.utils import np_utils
 
 import os
+import numpy as np
+
 from sklearn.model_selection import train_test_split
 
 import time
 import datetime
-from tqdm import tqdm
-
 
 # %%
 print(tf.__version__)
@@ -451,10 +476,10 @@ model = build_h1_model()
 # %%
 # View the model architecture
 model = build_h1_model()
-# plot_model(model, expand_nested=True, dpi=60, show_shapes=True)
+keras.utils.plot_model(model, expand_nested=True, dpi=60, show_shapes=True)
 
 # %%
-# model.summary()
+model.summary()
 
 # %% [markdown]
 # ## Setup Federated Learning
@@ -469,7 +494,7 @@ def model_fn_h1():
       metrics=[tf.keras.metrics.Accuracy()])
 
 # %%
-# @tff.tf_computation
+@tff.tf_computation
 def server_init_h1():
   model = model_fn_h1()
   return model.trainable_variables
