@@ -1,30 +1,28 @@
+# utils/logging_utils.py
 import logging
 import os
-from datetime import datetime
 from pathlib import Path
 
-_logger = None 
+_logger = None
 
 def setup_logger(output_dir: str, logger_name: str = "shared_logger") -> logging.Logger:
     """
-    Sets up a logger that writes to both a timestamped file and to console.
+    Sets up a logger that writes to a file (run.log) and to console.
     Returns a logger instance.
     """
-
     global _logger
     if _logger is not None:
-        return _logger  # Return the existing logger
+        return _logger  # Return the existing logger if already created
 
-    # Create a new logger instance
-    timestamp_str = datetime.now().strftime("%y-%m-%d_%H-%M-%S")
-    run_output_dir = Path(output_dir) / timestamp_str
-    run_output_dir.mkdir(parents=True, exist_ok=True)
+    # Make sure the output directory exists
+    output_dir_path = Path(output_dir)
+    output_dir_path.mkdir(parents=True, exist_ok=True)
 
-    log_file = run_output_dir / "run.log"
+    # Log file path
+    log_file = output_dir_path / "run.log"
 
     logger = logging.getLogger(logger_name)
     logger.setLevel(logging.INFO)
-
     logger.propagate = False
 
     # File handler
@@ -34,7 +32,7 @@ def setup_logger(output_dir: str, logger_name: str = "shared_logger") -> logging
     fh.setFormatter(formatter)
     logger.addHandler(fh)
 
-    # Optional console handler
+    # Console handler
     ch = logging.StreamHandler()
     ch.setLevel(logging.INFO)
     ch.setFormatter(formatter)

@@ -41,6 +41,8 @@ def train_federated_model(
     phase_test_central,
     model_build,
     client_ids,
+    client_epochs,
+    hierarchy,
     csv_file_path,
     patience,
     min_improvement,
@@ -55,6 +57,7 @@ def train_federated_model(
     best_accuracy = 0.0
     rounds_without_improvement = 0
     times_taken = []
+    client_epochs_list = [client_epochs for _ in range(len(phase_train))]
 
     with open(csv_file_path, 'w', newline='') as csv_file:
         csv_columns = [
@@ -81,20 +84,35 @@ def train_federated_model(
                 start_time = time.time()
 
                 # Perform one federated round
-                server_state = federated_algorithm.next(server_state, phase_train)
+                server_state = federated_algorithm.next(server_state, phase_train, client_epochs_list)
 
                 # Build a fresh model for evaluation each round
-                new_eval_model = model_build(
-                    cfg.img_channels,
-                    cfg.img_rows,
-                    cfg.img_cols,
-                    cfg.phase_classes
-                )
-                new_eval_model.compile(
-                    loss='categorical_crossentropy',
-                    optimizer='adam',
-                    metrics=['accuracy']
-                )
+                if hierarchy=='h1':
+                    new_eval_model = model_build(
+                        cfg.client.img_channels,
+                        cfg.client.img_rows,
+                        cfg.client.img_cols,
+                        cfg.client.h1.phase_classes
+                    )
+                    new_eval_model.compile(
+                        loss='categorical_crossentropy',
+                        optimizer='adam',
+                        metrics=['accuracy']
+                    )
+                elif hierarchy=='h2':
+                    new_eval_model = model_build()
+                    new_eval_model.compile(
+                        loss='categorical_crossentropy',
+                        optimizer='adam',
+                        metrics=['accuracy']
+                    )
+                elif hierarchy=='h3':
+                    new_eval_model = model_build()
+                    new_eval_model.compile(
+                        loss='mean_squared_error',
+                        optimizer='adam',
+                        metrics=['mse']
+                    )
                 new_eval_model.set_weights(server_state)
 
                 # Evaluate on the global training set
@@ -152,7 +170,6 @@ def train_federated_model(
                     "Train_Acc": f"{global_train_accuracy:.4f}",
                     "Time_Remaining": format_time(estimated_remaining_time)
                 })
-    logger.info(f"Final results: \nGlobal_Train_Loss: {global_train_loss} \tGlobal_Train_Accuracy: {global_train_accuracy}\n \
-                    Global_Test_Loss: {global_test_loss} \tGlobal_Test_Accuracy: {global_test_accuracy}")
+    logger.info(f"Final results: \nGlobal_Train_Loss: {global_train_loss} \tGlobal_Train_Accuracy: {global_train_accuracy}\nGlobal_Test_Loss: {global_test_loss} \tGlobal_Test_Accuracy: {global_test_accuracy}")
 
     return server_state

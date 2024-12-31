@@ -1,26 +1,26 @@
-hydra:
-  run:
-    dir: .
-
-# Client training parameters
-img_channels: 3
-img_rows: 50
-img_cols: 50
-batch_size: 20
-num_clients: 25
-phase_classes: 4
-
-# Federated learning parameters
-rounds: 3 #100
-
-# Data details
-npz_name: "Data/Videos_Database_20_Robot_WebCam_50_overall_database.npz"
-cup_type: "Big"  # or "Medium" or "Small" depending on your dataset
-
-# Early stopping parameters
-patience: 10        # Number of rounds to wait for improvement
-min_improvement: 0.001
-
-# Paths to save results
-output_path: "outputs"
-models_dir: "models"
+client:
+  img_channels: 3
+  img_rows: 50
+  img_cols: 50
+  batch_size: 20
+  epochs: 1
+  h1:
+    phase_classes: 4
+    model_path: outputs/H1_24-12-31_16-18-43/H1_5_3.h5
+  h2:
+    state_classes: 10
+    model_path: outputs/H2_24-12-31_16-51-03/H2_5_3.h5
+federated:
+  rounds: 3
+  patience: 10
+  min_improvement: 0.001
+  num_clients: 5
+data:
+  npz_name: Data/Videos_Database_20_Robot_WebCam_50_overall_database.npz
+  cup_type: Big
+paths:
+  output_dir: outputs
+  models_dir: models
+combined:
+  combined_output_dir: null
+  save_cfg: true

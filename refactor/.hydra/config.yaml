@@ -1,13 +1,25 @@
-img_channels: 3
-img_rows: 50
-img_cols: 50
-batch_size: 20
-num_clients: 25
-phase_classes: 4
-rounds: 3
-npz_name: Data/Videos_Database_20_Robot_WebCam_50_overall_database.npz
-cup_type: Big
-patience: 10
-min_improvement: 0.001
-output_path: outputs
-models_dir: models
+client:
+  img_channels: 3
+  img_rows: 50
+  img_cols: 50
+  batch_size: 20
+  epochs: 1
+  h1:
+    phase_classes: 4
+    model_path: ''
+  h2:
+    state_classes: 10
+federated:
+  rounds: 3
+  patience: 10
+  min_improvement: 0.001
+  num_clients: 5
+data:
+  npz_name: Data/Videos_Database_20_Robot_WebCam_50_overall_database.npz
+  cup_type: Big
+paths:
+  output_dir: outputs
+  models_dir: models
+combined:
+  combined_output_dir: null
+  save_cfg: true
