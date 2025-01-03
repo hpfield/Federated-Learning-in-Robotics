@@ -12,3 +12,5 @@ Compressed50EHIL/Videos_Database_UR16E_WebCam_50_Phase_results.csv
 *events.out.tfevents.*
 refactor/Data
 refactor/outputs
+Data/Videos_Database_20_Robot_WebCam_50_overall_database.npz
+src/outputs

@@ -16,7 +16,7 @@ federated:
   min_improvement: 0.001
   num_clients: 5
 data:
-  npz_name: Data/Videos_Database_20_Robot_WebCam_50_overall_database.npz
+  npz_name: ../Data/Videos_Database_20_Robot_WebCam_50_overall_database.npz
   cup_type: Big
 paths:
   output_dir: outputs
