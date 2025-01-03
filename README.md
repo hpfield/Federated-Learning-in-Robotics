@@ -8,12 +8,12 @@ This repository contains an implementation of **federated learning** for a **hie
 ## Table of Contents
 
 
-1. **Overview**
-2. **Installation**
-3. **Repository Structure**
-4. **Usage**
-5. **Technical Details**
-6. **Further Reading**
+1. [Overview](#1-overview)
+2. [Installation](#2-installation)
+3. [Repository Structure](#3-repository-structure)
+4. [Usage](#4-usage)
+5. [Technical Details](#5-technical-details)
+6. [Further Reading](#6-further-reading)
 
 
 ---
