@@ -36,7 +36,7 @@ def main(cfg: DictConfig):
     # 1. Create output directory
     base_output = Path(cfg.paths.output_dir)
     if cfg.combined.combined_output_dir is not None:
-        output_run_dir = base_output / cfg.combined.combined_output_dir
+        output_run_dir = base_output / cfg.combined.combined_output_dir / "H3"
     else:
         timestamp_str = datetime.now().strftime("%y-%m-%d_%H-%M-%S")
         output_run_dir = base_output / f"H3_{timestamp_str}"
@@ -63,9 +63,9 @@ def main(cfg: DictConfig):
         client_ids=client_ids,
         sessions_array=sessions,
         database=database_used,
-        db_key="Y_train_Regress",      # <-- Adjust to your actual regression label key
-        categorical=False,                # <-- Not one-hot for regression
-        categories=1                      # <-- If your pipeline expects an integer
+        db_key="Y_train_Regress",    
+        categorical=False,           
+        categories=1                   
     )
 
     # Convert them into dictionary form
@@ -114,18 +114,12 @@ def main(cfg: DictConfig):
     # -------------------------------------------------------------------
     # (B) Build an H3 model for regression
     # -------------------------------------------------------------------
-    # This calls your "learn_model" with Transfer_Type='Regression'
-    # and presumably compiles the model with 'mse' or 'mean_squared_error'.
-    # If TFF sees a compiled model, that can be problematic, so we either
-    # remove or conditionally skip the compile call inside learn_model.
     h3_pretrained = learn_model(
         oldmodel=h2_model_uncompiled,
         nb_classes=1,                  # single regression output
         Transfer_Type='Regression',
         summary=False
     )
-    # If "learn_model" compiled, TFF might complain. 
-    # So you might need to remove/disable that compile step or do the clone trick below.
 
     # -------------------------------------------------------------------
     # (C) Provide TFF an uncompiled clone

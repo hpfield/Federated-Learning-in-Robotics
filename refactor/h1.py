@@ -38,13 +38,13 @@ def main(cfg: DictConfig):
     # If we have a combined_output_dir passed via CLI, use that
     if cfg.combined.combined_output_dir is not None:
         # e.g. "outputs/my_combined_run"
-        output_run_dir = base_output / cfg.combined.combined_output_dir
+        output_run_dir = base_output / cfg.combined.combined_output_dir / "H1"
     else:
         # Otherwise, create a run-specific subfolder
         timestamp_str = datetime.now().strftime("%y-%m-%d_%H-%M-%S")
         # e.g. "outputs/H1_23-10-03_14-51-12"
         output_run_dir = base_output / f"H1_{timestamp_str}"
-
+        
     # 2. Make sure it exists
     output_run_dir.mkdir(parents=True, exist_ok=True)
 

@@ -39,7 +39,7 @@ def main(cfg: DictConfig):
     base_output = Path(cfg.paths.output_dir)
 
     if cfg.combined.combined_output_dir is not None:
-        output_run_dir = base_output / cfg.combined.combined_output_dir
+        output_run_dir = base_output / cfg.combined.combined_output_dir / "H2"
     else:
         timestamp_str = datetime.now().strftime("%y-%m-%d_%H-%M-%S")
         output_run_dir = base_output / f"H2_{timestamp_str}"
@@ -124,20 +124,13 @@ def main(cfg: DictConfig):
     # -----------------------------------------------------------
     #  (B) Build an H2 model using your 'learn_model', but skip compile
     # -----------------------------------------------------------
-    # By default, your learn_model might call `model.compile`.  
-    # If so, you can remove that call in learn_model or add an argument
-    # (e.g. compile_model=False) to skip it. 
-    #
-    # For simplicity, let's assume we remove the compile calls from learn_model,
-    # or we add some logic there to skip compile in transfer. So we get an uncompiled H2:
+
     h2_pretrained = learn_model(
         oldmodel=h1_model_uncompiled,
         nb_classes=cfg.client.h2.state_classes,
         Transfer_Type='Classification',
         summary=False
     )
-    # h2_pretrained now has the correct architecture & weights,
-    # but ideally is *not* compiled.  
 
     # -----------------------------------------------------------
     #  (C) Provide TFF an uncompiled clone
