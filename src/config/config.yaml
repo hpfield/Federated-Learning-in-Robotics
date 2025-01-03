@@ -6,10 +6,10 @@ client:
   epochs: 1
   h1:
     phase_classes: 4
-    model_path: outputs/25-01-03_10-15-28/H1/H1_5_3.h5
+    model_path: outputs/25-01-03_11-03-59/H1/H1_5_3.h5
   h2:
     state_classes: 10
-    model_path: outputs/25-01-03_10-15-28/H2/H2_5_3.h5
+    model_path: outputs/25-01-03_11-03-59/H2/H2_5_3.h5
 federated:
   rounds: 3
   patience: 10
@@ -22,5 +22,5 @@ paths:
   output_dir: outputs
   models_dir: models
 combined:
-  combined_output_dir: 25-01-03_10-15-28
+  combined_output_dir: 25-01-03_11-03-59
   save_cfg: false

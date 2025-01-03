@@ -1,16 +1,2 @@
-Individual Models FXAI/Models
-Individual Models FXAI/Data
-project/Log
-project/data_handling/Videos_Database_20_Robot_WebCam_50_overall_database.npz
-project/Videos_Database_UR16E_WebCam_50_overall_database.npz
-baseline-reruns/Videos_Database_20_Robot_WebCam_50_overall_database.npz
-baseline-reruns/Videos_Database_20_Robot_WebCam_50_Phase_results.csv
-baseline-reruns/Log
-project/Videos_Database_20_Robot
-Compressed50EHIL/Videos_Database_UR16E_WebCam_50_overall_database.npz
-Compressed50EHIL/Videos_Database_UR16E_WebCam_50_Phase_results.csv
-*events.out.tfevents.*
-refactor/Data
-refactor/outputs
 Data/Videos_Database_20_Robot_WebCam_50_overall_database.npz
 src/outputs

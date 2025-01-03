@@ -18,7 +18,7 @@ This repository contains an implementation of **federated learning** for a **hie
 
 ---
 
-## 1. Overview
+## Overview
 
 The project implements a **three-tier hierarchy** (`H1`, `H2`, `H3`) for robotic control:
 
@@ -31,7 +31,7 @@ These hierarchies build upon each other, which **improves explainability** by de
 
 ---
 
-## 2. Installation
+## Installation
 
 ### Environment
 
@@ -39,25 +39,26 @@ These hierarchies build upon each other, which **improves explainability** by de
 1. **Create a Conda environment** with Python 3.10:
 
 ```
-conda create -n fxai_env python=3.10 conda activate fxai_env
+conda create -n fxai_env python=3.10 
+conda activate fxai_env
 ```
 
-2. **Install jaxlib**:
+2. **Install Packages** wit pip:
 ```
-pip install jaxlib==0.3.15 -f https://storage.googleapis.com/jax-releases/jax_releases.htmlz
+pip install -r requirements.txt
 ```
-
-3. **Install TensorFlow Federated**:
-```
-pip install tensorflow-federated==0.58.0
-```
-
-4. **Install remaining libraries** as necessary (e.g., TensorFlow, Keras, OmegaConf).  
-- The file `environment.yml` has partial environment specs, but some dependencies may need manual installation.
 
 ---
 
-## 3. Repository Structure
+## Data Preparation
+
+1. **Download the dataset** from Google Drive:
+[Videos_Database_20_Robot_WebCam_50_overall_database.npz](https://drive.google.com/file/d/1M3iBDlTycxGXJ53kBuiYXDu7YIgrsbg7/view?usp=sharing)
+
+2. **Create a folder** named `Data` in the **repository root** (if it does not exist).
+3. **Place** the downloaded `.npz` file inside `Data/`.
+
+## Repository Structure
 
 Below is a **simplified** layout of important files:
 
@@ -92,12 +93,13 @@ Below is a **simplified** layout of important files:
 
 ---
 
-## 4. Usage
+## Usage
 
 1. **Edit** `config/config.yaml` to adjust hyperparameters, paths, or other settings.
 2. **Run** the entire pipeline:
 ```
-cd src python run_all.py
+cd src 
+python run_all.py
 ```
 
 - A timestamped directory will be created under `cfg.paths.output_dir`, with subfolders for `H1`, `H2`, and `H3`.
@@ -108,7 +110,7 @@ cd src python run_all.py
 
 ---
 
-## 5. Technical Details
+## Technical Details
 
 - **Federated Learning**: Implemented via **TensorFlow Federated** (v0.58.0).  
 - **Hierarchical Models**:  
@@ -120,7 +122,7 @@ cd src python run_all.py
 
 ---
 
-## 6. Further Reading
+## Further Reading
 
 A broader discussion of **Federated Learning in Care Robotics**, including experimental results and a detailed presentation, is available in a separate repository:
 [**Federated-Learning-in-Care-Robotics**](https://github.com/hpfield/Federated-Learning-in-Care-Robotics)
